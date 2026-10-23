@@ -1,0 +1,157 @@
+/* ProgressBar component styles: snake progress bar + image puzzles
+   (shared buttons, panel, status-line and colour tokens come from src/styles/base.css) */
+
+.progress-panel { display: flex; flex-direction: column; align-items: stretch; gap: 16px; }
+.task-name { margin: 0; font-size: 1.2rem; font-weight: 700; }
+.percent { font-size: 3.4rem; font-weight: 800; line-height: 1; letter-spacing: -0.03em; }
+.status-done { color: #0c6b44; }
+
+.pz-small { padding: 8px 16px; font-size: 0.95rem; box-shadow: 3px 3px 0 var(--ink); }
+
+/* ---------- Summary ---------- */
+.pz-summary { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+.pz-chip {
+  padding: 6px 16px;
+  font-weight: 700;
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  border-radius: 999px;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.pz-summary-line { text-align: left; font-size: 1rem; }
+
+/* ---------- Puzzle selector cards (each has its own snake bar) ---------- */
+.pz-cards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.pz-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 10px 4px;
+  text-align: left;
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  border-radius: 18px;
+  box-shadow: 3px 3px 0 var(--ink);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+.pz-card:hover { transform: translate(-1px, -2px); box-shadow: 5px 5px 0 var(--ink); }
+.pz-card:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.pz-card.is-current { background: var(--sun); transform: translate(-1px, -3px); box-shadow: 5px 6px 0 var(--ink); }
+.pz-card.is-done { background: var(--mint); }
+.pz-card-row { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.pz-card-thumb {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  background-size: cover;
+  border: 3px solid var(--ink);
+  border-radius: 10px;
+}
+.pz-card-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.95rem; font-weight: 800; }
+.pz-card-pct { flex: none; font-weight: 800; }
+
+/* ---------- Snake progress bar ---------- */
+.sn { width: 100%; }
+.sn svg { display: block; width: 100%; height: auto; }
+.sn-edge, .sn-track, .sn-body, .sn-spots { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.sn-edge { stroke: var(--ink); stroke-width: 32; }
+.sn-track { stroke: var(--paper); stroke-width: 20; }
+.sn-body { stroke: var(--mint); stroke-width: 20; }
+.sn-spots { stroke: #1fa774; stroke-width: 8; }
+.sn-head { fill: var(--mint); stroke: var(--ink); stroke-width: 5; }
+.sn-eye { fill: var(--paper); stroke: var(--ink); stroke-width: 3; }
+.sn-pupil { fill: var(--ink); }
+.sn-tongue { fill: none; stroke: #ff5d5d; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.sn-apple { fill: #ff5d5d; stroke: var(--ink); stroke-width: 4; }
+.sn-leaf { fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; }
+
+.sn-wrap { width: 100%; max-width: 560px; margin: 0 auto; }
+
+/* ---------- Active puzzle stage ---------- */
+.pz-stage {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  border-radius: 20px;
+  box-shadow: 6px 6px 0 var(--ink);
+}
+.pz-stage-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; }
+.pz-stage-title { margin: 0; font-size: 1.4rem; font-weight: 800; letter-spacing: -0.01em; }
+.pz-stage-title span { font-weight: 600; opacity: 0.75; }
+
+/* ---------- Puzzle board ---------- */
+.pz-play { display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: 28px; align-items: start; margin-top: 6px; }
+
+.pz-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  width: 100%;
+  max-width: 440px;
+  aspect-ratio: 1;
+  padding: 8px;
+  overflow: hidden;
+  background: var(--ink);
+  border: 3px solid var(--ink);
+  border-radius: 20px;
+  box-shadow: 8px 8px 0 var(--ink);
+}
+.pz-tile {
+  padding: 0;
+  background-color: var(--lilac);
+  background-repeat: no-repeat;
+  background-size: 300% 300%;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+.pz-tile:hover { transform: scale(0.96); }
+.pz-tile.is-picked { transform: scale(0.92); outline: 5px solid var(--sun); outline-offset: -5px; }
+.pz-tile:focus-visible { outline: 4px solid var(--blue); outline-offset: -4px; }
+.pz-board.is-solved { gap: 0; padding: 0; }
+.pz-board.is-solved .pz-tile { border-radius: 0; cursor: default; transform: none; }
+
+.pz-side { display: flex; flex-direction: column; gap: 14px; }
+.pz-thumb {
+  width: 100%;
+  aspect-ratio: 1;
+  background-size: cover;
+  border: 3px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.pz-caption { margin: 8px 0 0; font-weight: 700; text-align: center; }
+.pz-moves { margin: 0; font-size: 1.1rem; font-weight: 600; }
+.pz-win {
+  margin: 0;
+  padding: 10px 14px;
+  font-weight: 800;
+  background: var(--sun);
+  border: 3px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 860px) {
+  .pz-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .pz-play { grid-template-columns: 1fr; }
+  .pz-board { margin: 0 auto; }
+  .pz-side { flex-direction: row; flex-wrap: wrap; align-items: center; }
+  .pz-side > div { width: 130px; }
+}
+@media (max-width: 640px) {
+  .percent { font-size: 2.6rem; }
+  .pz-stage { padding: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pz-tile, .pz-card { transition: none; }
+}
